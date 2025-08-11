@@ -16,12 +16,10 @@ export const ZBDRamp = forwardRef<ZBDRampRef, ZBDRampProps>(({ className, style,
   const createRampInstance = useCallback(() => {
     if (!containerRef.current) return;
 
-    // Clean up existing instance
     if (rampInstanceRef.current) {
       rampInstanceRef.current.destroy();
     }
 
-    // Create new instance
     rampInstanceRef.current = createRamp({
       ...rampOptions,
       container: containerRef.current,
@@ -41,7 +39,6 @@ export const ZBDRamp = forwardRef<ZBDRampRef, ZBDRampProps>(({ className, style,
     };
   }, [createRampInstance]);
 
-  // Expose instance methods via ref
   useImperativeHandle(
     ref,
     () => ({
@@ -104,7 +101,6 @@ export const useZBDRamp = (options: RampOptions) => {
   };
 };
 
-// Re-export types from core package
 export type {
   RampConfig,
   RampCallbacks,
