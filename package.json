@@ -1,6 +1,6 @@
 {
   "name": "@zbdpay/ramp-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "React wrapper for ZBD Ramp widget",
   "main": "dist/src/index.js",

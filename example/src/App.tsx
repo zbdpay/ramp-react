@@ -106,12 +106,6 @@ const App = () => {
     alert(`Payment error: ${error.message}`)
   }
 
-  const handleClose = () => {
-    console.log('Widget closed')
-    setShowRamp(false)
-    setSessionToken('')
-  }
-
   const closeRamp = () => {
     if (rampRef.current) {
       rampRef.current.unmount()
@@ -252,7 +246,6 @@ const App = () => {
                 onReady={() => console.log('Widget ready')}
                 onSuccess={handleSuccess}
                 onError={handleError}
-                onClose={handleClose}
                 onStepChange={(step) => console.log('Step:', step)}
                 onLog={(logData) => console.log('Log:', logData)}
                 style={{ width: '100%', height: '100%' }}

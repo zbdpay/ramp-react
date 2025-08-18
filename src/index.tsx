@@ -111,4 +111,4 @@ export type {
   PostMessageData,
 } from '@zbdpay/ramp-ts';
 
-export { EnvironmentEnum } from '@zbdpay/ramp-ts';
+export { EnvironmentEnum, WidgetPostMessageEnum } from '@zbdpay/ramp-ts';
