@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react'
-import { ZBDRamp, type ZBDRampRef, EnvironmentEnum } from '@zbdpay/ramp-react'
+import { ZBDRamp, type ZBDRampRef, EnvironmentEnum, initRampSession, QuoteCurrencyEnum, BaseCurrencyEnum } from '@zbdpay/ramp-react'
 
 interface FormData {
   apiKey: string;
   environment: EnvironmentEnum;
   email: string;
   destination: string;
-  quoteCurrency: string;
-  baseCurrency: string;
+  quoteCurrency: QuoteCurrencyEnum;
+  baseCurrency: BaseCurrencyEnum;
   webhookUrl: string;
   referenceId: string;
 }
@@ -21,8 +21,8 @@ const App = () => {
     environment: EnvironmentEnum.X1,
     email: '',
     destination: '',
-    quoteCurrency: 'USD',
-    baseCurrency: 'BTC',
+    quoteCurrency: QuoteCurrencyEnum.USD,
+    baseCurrency: BaseCurrencyEnum.BTC,
     webhookUrl: 'https://webhook.site/79f9c0fa-8cfa-4762-9c28-e94290e8c2e1',
     referenceId: ''
   })
@@ -44,49 +44,28 @@ const App = () => {
     setIsLoading(true)
 
     try {
-      const apiUrl = environment === EnvironmentEnum.Production
-        ? 'https://api.zbdpay.com/v1/ramp-widget'
-        : `https://${environment}.zbdpay.com/api/v1/ramp-widget`
-
-      const requestBody = {
+      const response = await initRampSession({
+        apikey: apiKey,
         email,
+        destination,
         quote_currency: quoteCurrency,
         base_currency: baseCurrency,
-        destination,
         webhook_url: webhookUrl,
-        ...(referenceId && { reference_id: referenceId }),
+        reference_id: referenceId || undefined,
         metadata: {
           created_from: 'ramp-react-example',
           environment,
         },
-      }
-
-      console.log('Creating session with:', requestBody)
-
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          apikey: apiKey,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
+        environment,
       })
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`API Error ${response.status}: ${errorText}`)
-      }
+      console.log('Session created:', response)
 
-      const data = await response.json()
-      console.log('Session created:', data)
-
-      const token = data.data.session_token
-
-      if (token) {
-        setSessionToken(token)
+      if (response.success && response.data.session_token) {
+        setSessionToken(response.data.session_token)
         setShowRamp(true)
       } else {
-        throw new Error('No session token found in API response')
+        throw new Error(response.error || 'No session token found in API response')
       }
     } catch (error) {
       console.error('Error creating session:', error)

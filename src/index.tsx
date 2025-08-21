@@ -109,6 +109,15 @@ export type {
   RampLog,
   RampInstance,
   PostMessageData,
+  InitRampSessionConfig,
+  InitRampSessionData,
+  InitRampSessionResponse,
 } from '@zbdpay/ramp-ts';
 
-export { EnvironmentEnum, WidgetPostMessageEnum } from '@zbdpay/ramp-ts';
+export {
+  EnvironmentEnum,
+  WidgetPostMessageEnum,
+  QuoteCurrencyEnum,
+  BaseCurrencyEnum,
+  initRampSession,
+} from '@zbdpay/ramp-ts';
