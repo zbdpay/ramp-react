@@ -1,6 +1,6 @@
 {
   "name": "@zbdpay/ramp-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "description": "React wrapper for ZBD Ramp widget",
   "main": "dist/src/index.js",
@@ -39,9 +39,6 @@
     "dist",
     "README.md"
   ],
-  "dependencies": {
-    "@zbdpay/ramp-ts": "file:../ramp-ts"
-  },
   "devDependencies": {
     "@release-it/keep-a-changelog": "^7.0.0",
     "@swc/cli": "^0.5.0",
@@ -67,5 +64,8 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "packageManager": "pnpm@10.12.3+sha512.467df2c586056165580ad6dfb54ceaad94c5a30f80893ebdec5a44c5aa73c205ae4a5bb9d5ed6bb84ea7c249ece786642bbb49d06a307df218d03da41c317417"
+  "packageManager": "pnpm@10.12.3+sha512.467df2c586056165580ad6dfb54ceaad94c5a30f80893ebdec5a44c5aa73c205ae4a5bb9d5ed6bb84ea7c249ece786642bbb49d06a307df218d03da41c317417",
+  "dependencies": {
+    "@zbdpay/ramp-ts": "^1.1.4"
+  }
 }

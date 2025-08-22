@@ -1,9 +1,8 @@
 import { useState, useRef } from 'react'
-import { ZBDRamp, type ZBDRampRef, EnvironmentEnum, initRampSession, QuoteCurrencyEnum, BaseCurrencyEnum } from '@zbdpay/ramp-react'
+import { ZBDRamp, type ZBDRampRef, initRampSession, QuoteCurrencyEnum, BaseCurrencyEnum } from '@zbdpay/ramp-react'
 
 interface FormData {
   apiKey: string;
-  environment: EnvironmentEnum;
   email: string;
   destination: string;
   quoteCurrency: QuoteCurrencyEnum;
@@ -18,7 +17,6 @@ const App = () => {
   const [showRamp, setShowRamp] = useState(false)
   const [formData, setFormData] = useState<FormData>({
     apiKey: '',
-    environment: EnvironmentEnum.X1,
     email: '',
     destination: '',
     quoteCurrency: QuoteCurrencyEnum.USD,
@@ -34,7 +32,7 @@ const App = () => {
   }
 
   const createSessionToken = async () => {
-    const { apiKey, environment, email, destination, quoteCurrency, baseCurrency, webhookUrl, referenceId } = formData
+    const { apiKey, email, destination, quoteCurrency, baseCurrency, webhookUrl, referenceId } = formData
 
     if (!apiKey || !email || !destination) {
       alert('Please fill in API Key, Email, and Destination fields')
@@ -54,9 +52,7 @@ const App = () => {
         reference_id: referenceId || undefined,
         metadata: {
           created_from: 'ramp-react-example',
-          environment,
         },
-        environment,
       })
 
       console.log('Session created:', response)
@@ -111,20 +107,6 @@ const App = () => {
                 value={formData.apiKey}
                 onChange={(e) => handleInputChange('apiKey', e.target.value)}
               />
-            </div>
-
-            <div>
-              <label htmlFor="environment">Environment</label>
-              <select
-                id="environment"
-                value={formData.environment}
-                onChange={(e) => handleInputChange('environment', e.target.value as EnvironmentEnum)}
-              >
-                <option value={EnvironmentEnum.Production}>Production</option>
-                <option value={EnvironmentEnum.X1}>X1 (Sandbox)</option>
-                <option value={EnvironmentEnum.X2}>X2 (Sandbox)</option>
-                <option value={EnvironmentEnum.Voltorb}>Voltorb (Sandbox)</option>
-              </select>
             </div>
 
             <div>
@@ -221,7 +203,6 @@ const App = () => {
               <ZBDRamp
                 ref={rampRef}
                 sessionToken={sessionToken}
-                environment={formData.environment}
                 onReady={() => console.log('Widget ready')}
                 onSuccess={handleSuccess}
                 onError={handleError}
